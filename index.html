@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Bento Landing Page - [YOUR NAME]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Reset and Variables */
+        :root {
+            --color-background: #F8F9FA; 
+            --color-card-bg: #FFFFFF;    
+            --color-text-primary: #343A40; 
+            --color-text-secondary: #6C757D; 
+            --color-accent: #004D99;     /* Deep Ocean Blue (UMT Theme) */
+            --color-light-accent-bg: #E6F0FF; 
+            --border-radius-large: 16px;
+            --spacing-unit: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: var(--spacing-unit);
+        }
+
+        /* --- Bento Grid Layout --- */
+        .bento-container {
+            width: 100%;
+            max-width: 1200px; 
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto auto auto auto; 
+            gap: var(--spacing-unit);
+            align-content: start;
+        }
+
+        .bento-card {
+            background-color: var(--color-card-bg);
+            border-radius: var(--border-radius-large);
+            padding: var(--spacing-unit);
+            border: 1px solid #E9ECEF;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .bento-card:hover {
+            transform: scale(1.02); 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            z-index: 10;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            margin-bottom: 10px;
+        }
+
+        .card-content p, .card-content ul {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--color-text-secondary);
+        }
+
+        .card-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card-content a {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* --- Specific Card Sizing (Desktop) --- */
+        .card-profile { grid-column: span 2; grid-row: span 2; }
+        .card-location { grid-column: span 1; }
+        .card-hobby { grid-column: 3 / span 1; }
+        .card-reflection { grid-column: 4 / span 1; }
+        .card-tech-stack { grid-column: 3 / span 1; grid-row: 1 / span 2; }
+        .card-case-study { grid-column: 1 / span 2; }
+        .card-playlist { grid-column: 1 / -1; }
+
+
+        /* --- Styling for Profile Card with BG Image --- */
+        .card-profile {
+            background-image: url('bg.jpg'); 
+            background-size: cover;          
+            background-position: center;     
+            color: #FFFFFF; 
+            position: relative; 
+            overflow: hidden; 
+            background-color: transparent; 
+        }
+
+        .card-profile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.35); 
+            z-index: 1; 
+            border-radius: var(--border-radius-large);
+        }
+
+        .card-profile > div {
+            z-index: 2;
+            position: relative;
+        }
+
+        .card-profile .name, 
+        .card-profile .tagline,
+        .card-profile .details,
+        .card-profile .social-links a,
+        .card-profile .card-title {
+            color: #FFFFFF !important; 
+        }
+        
+        .card-profile .name {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+        
+        .card-profile .tagline {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .card-profile .details {
+            font-size: 1.25rem;
+        }
+
+        .card-profile .social-links a {
+            margin-right: 15px;
+            font-size: 1rem;
+        }
+
+        .card-location .time {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-accent);
+        }
+
+        .card-tech-stack ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .card-tech-stack li {
+            background-color: var(--color-light-accent-bg);
+            color: var(--color-accent);
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* --- Case Study & Timer Button Styling --- */
+        .case-study-layout {
+            display: flex;
+            gap: var(--spacing-unit);
+            align-items: center;
+        }
+
+        .case-study-text { flex: 2; }
+        .case-study-action { flex: 1; text-align: right; }
+
+        .btn-timer {
+            display: inline-block;
+            background-color: var(--color-accent);
+            color: #FFFFFF !important;
+            padding: 12px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 77, 153, 0.2);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-timer:hover {
+            background-color: #003366;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 77, 153, 0.3);
+        }
+
+        /* --- Responsiveness --- */
+        @media (max-width: 768px) {
+            .bento-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .bento-card {
+                grid-column: span 1 !important;
+                grid-row: span 1 !important;
+            }
+            .case-study-layout {
+                flex-direction: column;
+                text-align: left;
+            }
+            .case-study-action { text-align: left; width: 100%; margin-top: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bento-container">
+
+        <div class="bento-card card-profile">
+            <div>
+                <h1 class="name">[NURUL AILE]</h1>
+                <p class="tagline">Innovating food safety.</p>
+                <p class="details">
+                    <span class="program">B.Sc. Food Science</span> | 
+                    <span class="year">Year 2</span>
+                </p>
+            </div>
+            <div class="social-links">
+                <p class="card-title">Connect</p>
+                <a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="#" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="#" target="_blank" rel="noopener noreferrer">UMT Portal</a>
+            </div>
+        </div>
+
+        <div class="bento-card card-tech-stack">
+            <p class="card-title">Skills & Knowledge</p>
+            <div class="card-content">
+                <ul>
+                    <li>Food Chemistry</li>
+                    <li>Microbiology</li>
+                    <li>Excel</li>
+                    <li>Lab Analysis</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="bento-card card-location">
+            <div>
+                <p class="card-title">Campus Hub</p>
+                <p class="card-content">UMT, Kuala Nerus</p>
+            </div>
+            <div>
+                <p class="time">11:28 AM</p>
+                <p class="card-content">Mon, Dec 15, 2025</p>
+            </div>
+        </div>
+
+        <div class="bento-card card-hobby">
+            <p class="card-title">Hobby</p>
+            <div class="card-content">
+                <p>🌊 Evening walks at Pantai UMT, enjoying the sea breeze.</p>
+            </div>
+        </div>
+        
+        <div class="bento-card card-case-study">
+            <div class="case-study-layout">
+                <div class="case-study-text">
+                    <p class="card-title">Case Study: Starch Gelatinization</p>
+                    <div class="card-content">
+                        <p>Analyzing texture profiles and thermal behavior during the preparation of traditional Malaysian **Kuih Lapis**.</p>
+                        <a href="#">View Research Notes →</a>
+                    </div>
+                </div>
+                <div class="case-study-action">
+                    <a href="[PASTE YOUR APP URL HERE]" class="btn-timer">Try My Focus Timer App</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="bento-card card-reflection">
+            <p class="card-title">Why Food Tech Matters in Malaysia</p>
+            <div class="card-content">
+                <p>Sustainable food security is crucial for our future. By optimizing local processing methods, we can reduce waste and improve nutrition.</p>
+            </div>
+        </div>
+
+        <div class="bento-card card-playlist">
+            <p class="card-title">Study Vibes Playlist</p>
+            <div class="card-content">
+                <p>Currently playing: *Instrumental Jazz for Maximum Focus*</p>
+                <p class="card-content"><iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/1vva4fJyjXaJ2RDsGmIbCv?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>.</p>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
